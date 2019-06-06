@@ -1,13 +1,38 @@
-import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { FormQLModule } from '@formql/core';
+import { FormQLEditorModule } from '@formql/editor';
 
 import { AppComponent } from './app.component';
-import { HelloComponent } from './hello.component';
+import { MyAppService } from './services/my-app.service';
+import { SomeFormComponent } from './components/some-form/some-form.component';
+import { SomeFieldComponent } from './components/some-field/some-field.component';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule ],
-  declarations: [ AppComponent, HelloComponent ],
-  bootstrap:    [ AppComponent ]
+  declarations: [
+    AppComponent,
+    SomeFormComponent,
+    SomeFieldComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormQLModule,
+    FormQLEditorModule,
+    HttpClientModule
+  ],
+  entryComponents: [
+    SomeFormComponent,
+    SomeFieldComponent
+  ],
+  providers: [
+    MyAppService,
+    {
+      provide: 'FormQLService',
+      useClass: MyAppService
+    }
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
